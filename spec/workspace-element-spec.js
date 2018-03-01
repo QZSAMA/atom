@@ -658,15 +658,49 @@ describe('WorkspaceElement', () => {
       expect(bottomDock.isVisible()).toBe(false)
       expectToggleButtonHidden(bottomDock)
 
+      let msg
+      msg = ['------>']
+
       // Mouse to edge of the window
+      msg.push('hovered dock before moving mouse: ' + (workspaceElement.hoveredDock && workspaceElement.hoveredDock.location))
       moveMouse({clientX: 300, clientY: 290})
       expectToggleButtonHidden(leftDock)
       moveMouse({clientX: 300, clientY: 299})
+      msg.push('hovered dock after moving mouse: ' + (workspaceElement.hoveredDock && workspaceElement.hoveredDock.location))
+      msg.push('leftDock state.hovered ' + leftDock.state.hovered)
+      msg.push('leftDock state.visible ' + leftDock.state.visible)
+      msg.push('leftDock paneItems.length ' + leftDock.getPaneItems().length)
+      msg.push('leftDock state.showDropTarget ' + leftDock.state.showDropTarget)
+      msg.push('leftDock state.draggingItem ' + !!leftDock.state.draggingItem)
+      msg.push('mouse is at 300, 299.')
+      msg.push('leftDock, pointWithinHoverArea detectingExit true  ' + leftDock.pointWithinHoverArea({x: 300, y: 299}, true))
+      msg.push('leftDock, pointWithinHoverArea detectingExit false ' + leftDock.pointWithinHoverArea({x: 300, y: 299}, false))
+      msg.push('rightDock, pointWithinHoverArea detectingExit true  ' + rightDock.pointWithinHoverArea({x: 300, y: 299}, true))
+      msg.push('rightDock, pointWithinHoverArea detectingExit false ' + rightDock.pointWithinHoverArea({x: 300, y: 299}, false))
+      msg.push('bottomDock, pointWithinHoverArea detectingExit true  ' + bottomDock.pointWithinHoverArea({x: 300, y: 299}, true))
+      msg.push('bottomDock, pointWithinHoverArea detectingExit false ' + bottomDock.pointWithinHoverArea({x: 300, y: 299}, false))
+      msg.push('does toggle button class: ' + bottomDock.toggleButton.element.className)
+      expect(msg.join('\n')).toBe('')
       expectToggleButtonVisible(bottomDock, 'icon-chevron-up')
 
       // Click the toggle button again
       bottomDock.toggleButton.innerElement.click()
       expect(bottomDock.isVisible()).toBe(true)
+      msg = ['------>']
+      msg.push('hovered dock after click: ' + (workspaceElement.hoveredDock && workspaceElement.hoveredDock.location))
+      msg.push('leftDock state.hovered ' + leftDock.state.hovered)
+      msg.push('leftDock state.visible ' + leftDock.state.visible)
+      msg.push('leftDock paneItems.length ' + leftDock.getPaneItems().length)
+      msg.push('leftDock state.showDropTarget ' + leftDock.state.showDropTarget)
+      msg.push('leftDock state.draggingItem ' + !!leftDock.state.draggingItem)
+      msg.push('leftDock, pointWithinHoverArea detectingExit true  ' + leftDock.pointWithinHoverArea({x: 300, y: 299}, true))
+      msg.push('leftDock, pointWithinHoverArea detectingExit false ' + leftDock.pointWithinHoverArea({x: 300, y: 299}, false))
+      msg.push('rightDock, pointWithinHoverArea detectingExit true  ' + rightDock.pointWithinHoverArea({x: 300, y: 299}, true))
+      msg.push('rightDock, pointWithinHoverArea detectingExit false ' + rightDock.pointWithinHoverArea({x: 300, y: 299}, false))
+      msg.push('bottomDock, pointWithinHoverArea detectingExit true  ' + bottomDock.pointWithinHoverArea({x: 300, y: 299}, true))
+      msg.push('bottomDock, pointWithinHoverArea detectingExit false ' + bottomDock.pointWithinHoverArea({x: 300, y: 299}, false))
+      msg.push('does toggle button class: ' + bottomDock.toggleButton.element.className)
+      expect(msg.join('\n')).toBe('')
       expectToggleButtonVisible(bottomDock, 'icon-chevron-down')
     })
 
